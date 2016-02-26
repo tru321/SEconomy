@@ -37,9 +37,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Wolfje.Plugins.Jist">
-      <HintPath>..\..\Jist\bin\Debug\Wolfje.Plugins.Jist.dll</HintPath>
-    </Reference>
     <Reference Include="TShockAPI">
       <HintPath>..\..\ServerInstance4.2\ServerPlugins\TShockAPI.dll</HintPath>
     </Reference>
@@ -49,9 +46,6 @@
     <Reference Include="Wolfje.Plugins.SEconomy.CmdAliasModule">
       <HintPath>..\..\ServerInstance4.2\ServerPlugins\Wolfje.Plugins.SEconomy.CmdAliasModule.dll</HintPath>
     </Reference>
-    <Reference Include="Wolfje.Plugins.SEconomy">
-      <HintPath>..\..\ServerInstance4.2\ServerPlugins\Wolfje.Plugins.SEconomy.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AliasLib\stdalias.cs" />
@@ -60,7 +54,12 @@
     <Compile Include="JScriptAliasCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SEconomyPlugin\SEconomyPlugin.csproj">
+      <Project>{a3dfc107-09d3-4bc4-be73-ce7d1cc98495}</Project>
+      <Name>SEconomyPlugin</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
