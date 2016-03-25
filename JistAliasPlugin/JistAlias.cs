@@ -170,7 +170,7 @@ namespace Wolfje.Plugins.SEconomy.JistAliasModule {
 				}
 
 				//cooldown key is a pair of the user's character name, and the command they have called.
-				KeyValuePair<string, AliasCommand> cooldownReference = new KeyValuePair<string, AliasCommand>(e.CommandArgs.Player.UserAccountName, alias);
+				KeyValuePair<string, AliasCommand> cooldownReference = new KeyValuePair<string, AliasCommand>(e.CommandArgs.Player.User.Name, alias);
 				if (CooldownList.ContainsKey(cooldownReference)) {
 					//UTC time so we don't get any daylight saving shit cuntery
 					canRunNext = CooldownList[cooldownReference];

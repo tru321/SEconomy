@@ -122,6 +122,8 @@ You do NOT have to restart the server to issue this command.  Just continue as n
 
 		protected void PrintIntro()
 		{
+            ConsoleColor originalBackColour;
+
 			Console.WriteLine();
 			Console.ForegroundColor = ConsoleColor.Cyan;
 			Console.Write(" SEconomy Update ");
@@ -139,12 +141,20 @@ You do NOT have to restart the server to issue this command.  Just continue as n
 
 			Console.WriteLine();
 			Console.ForegroundColor = ConsoleColor.Cyan;
-			Console.Write(" Copyright (C) Wolfje, 2014 - ");
+			Console.Write(" Copyright (C) Wolfje, 2014-2016 - ");
 
 			Console.ForegroundColor = ConsoleColor.Blue;
-			Console.Write("http://plugins.tw.id.au");
+			Console.Write("http://github.com/tylerjwatson/SEconomy");
 
 			Console.WriteLine("\r\n");
+
+            originalBackColour = Console.BackgroundColor;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(" SEconomy is free software.  If you paid for it you were scammed.");
+            Console.BackgroundColor = originalBackColour;
+            Console.WriteLine("\r\n");
+
 
 #if __PREVIEW
 			ConsoleEx.WriteLineColour(ConsoleColor.DarkRed, " This is a preview version of SEconomy.");
@@ -152,7 +162,7 @@ You do NOT have to restart the server to issue this command.  Just continue as n
 			Console.WriteLine();
 #endif
 
-			Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.Cyan;
 			Console.WriteLine(" Please wait...");
 			Console.WriteLine();
 			Console.ResetColor();

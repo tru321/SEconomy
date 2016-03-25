@@ -153,8 +153,9 @@ namespace Wolfje.Plugins.SEconomy
             }
             playerDamage.Damage += dmg;
 
-            if (playerDamage.Damage > NPC.lifeMax) {
-                playerDamage.Damage -= playerDamage.Damage % NPC.lifeMax; 
+            if (playerDamage.Damage > NPC.lifeMax)
+            {
+                playerDamage.Damage -= playerDamage.Damage % NPC.lifeMax;
             }
         }
 
@@ -352,7 +353,8 @@ namespace Wolfje.Plugins.SEconomy
             byte[] bufferSegment = null;
             TSPlayer player = null;
 
-            if ((player = TShock.Players.ElementAtOrDefault(args.Msg.whoAmI)) == null)
+            if (args.Handled == true
+                || (player = TShock.Players.ElementAtOrDefault(args.Msg.whoAmI)) == null)
             {
                 return;
             }
@@ -376,7 +378,8 @@ namespace Wolfje.Plugins.SEconomy
                     return;
                 }
 
-                if (DateTime.UtcNow.Subtract(player.LastThreat).TotalMilliseconds < 5000) {
+                if (DateTime.UtcNow.Subtract(player.LastThreat).TotalMilliseconds < 5000)
+                {
                     return;
                 }
 
