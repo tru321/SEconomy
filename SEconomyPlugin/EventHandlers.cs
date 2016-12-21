@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using TerrariaApi.Server;
 using TShockAPI;
 using Wolfje.Plugins.SEconomy.Journal;
+using Microsoft.Xna.Framework;
 
 namespace Wolfje.Plugins.SEconomy {
 	/// <summary>
@@ -66,8 +67,8 @@ namespace Wolfje.Plugins.SEconomy {
 				return;
 			}
 
-			sender = TShockAPI.TShock.Players.FirstOrDefault(i => i != null && i.UserAccountName == e.SenderAccount.UserAccountName);
-			receiver = TShockAPI.TShock.Players.FirstOrDefault(i => i != null && i.UserAccountName == e.ReceiverAccount.UserAccountName);
+			sender = TShockAPI.TShock.Players.FirstOrDefault(i => i != null && i.User.Name == e.SenderAccount.UserAccountName);
+			receiver = TShockAPI.TShock.Players.FirstOrDefault(i => i != null && i.User.Name == e.ReceiverAccount.UserAccountName);
 
 
 			

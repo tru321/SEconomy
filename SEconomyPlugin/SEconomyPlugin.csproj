@@ -31,9 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\References\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OTAPI">
+      <HintPath>..\References\OTAPI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,6 +51,12 @@
     <Reference Include="System.Xml" />
     <Reference Include="MySql.Data">
       <HintPath>..\References\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="TerrariaServer">
+      <HintPath>..\References\TerrariaServer.exe</HintPath>
+    </Reference>
+    <Reference Include="TShockAPI">
+      <HintPath>..\References\TShockAPI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -115,16 +123,6 @@
     <Compile Include="WorldEconomy.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\References\TShock\TerrariaServerAPI\TerrariaServer.csproj">
-      <Project>{6877506e-adc6-4142-98a6-79e4fa02855a}</Project>
-      <Name>TerrariaServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\References\TShock\TShockAPI\TShockAPI.csproj">
-      <Project>{49606449-072B-4CF5-8088-AA49DA586694}</Project>
-      <Name>TShockAPI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Forms\CAccountManagementWnd.resx">
       <DependentUpon>CAccountManagementWnd.cs</DependentUpon>
     </EmbeddedResource>
@@ -138,7 +136,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="changes.txt" />
-    <None Include="packages.config" />
     <None Include="Resources\arrow-return-180-left.png" />
     <None Include="Resources\cross-script.png" />
     <EmbeddedResource Include="Lang\%24en-AU.xml" />

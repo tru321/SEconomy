@@ -82,10 +82,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\References\TShock\TShockAPI\TShockAPI.csproj">
-      <Project>{49606449-072b-4cf5-8088-aa49da586694}</Project>
-      <Name>TShockAPI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SEconomyPlugin\SEconomyPlugin.csproj">
       <Project>{a3dfc107-09d3-4bc4-be73-ce7d1cc98495}</Project>
       <Name>SEconomyPlugin</Name>

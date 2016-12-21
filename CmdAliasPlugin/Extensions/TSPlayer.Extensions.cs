@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wolfje.Plugins.SEconomy.Extensions;
+using Microsoft.Xna.Framework;
 
 namespace Wolfje.Plugins.SEconomy.CmdAliasModule.Extensions {
 	public static class TSPlayerExtensions {

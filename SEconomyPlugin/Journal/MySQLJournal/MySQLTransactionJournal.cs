@@ -407,7 +407,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.MySQLJournal {
 			foreach (TSPlayer player in TShockAPI.TShock.Players) {
 				IBankAccount account = null;
 				if (player == null
-				    || player.UserAccountName == null
+				    || player.User.Name == null
 				    || (account = instance.GetBankAccount(player)) == null) {
 					continue;
 				}

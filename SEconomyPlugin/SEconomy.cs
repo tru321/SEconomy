@@ -115,12 +115,12 @@ namespace Wolfje.Plugins.SEconomy {
 		internal async Task<Journal.IBankAccount> CreatePlayerAccountAsync(TSPlayer player)
 		{
 			Money startingMoney;
-			Journal.IBankAccount newAccount = SEconomyPlugin.Instance.RunningJournal.AddBankAccount(player.UserAccountName, 
+			Journal.IBankAccount newAccount = SEconomyPlugin.Instance.RunningJournal.AddBankAccount(player.User.Name, 
 				                                  Terraria.Main.worldID, 
 				                                  Journal.BankAccountFlags.Enabled, 
 				                                  "");
 
-			TShock.Log.ConsoleInfo(string.Format("seconomy: bank account for {0} created.", player.UserAccountName));
+			TShock.Log.ConsoleInfo(string.Format("seconomy: bank account for {0} created.", player.User.Name));
 
 			if (Money.TryParse(SEconomyPlugin.Instance.Configuration.StartingMoney, out startingMoney)
 			    && startingMoney > 0) {
@@ -153,7 +153,7 @@ namespace Wolfje.Plugins.SEconomy {
 			foreach (var player in TShockAPI.TShock.Players) {
 				if (player == null
 				    || string.IsNullOrWhiteSpace(player.Name) == true
-				    || string.IsNullOrWhiteSpace(player.UserAccountName) == true
+				    || string.IsNullOrWhiteSpace(player.User.Name) == true
 				    || (account = GetBankAccount(player)) == null) {
 					continue;
 				}
@@ -220,7 +220,7 @@ namespace Wolfje.Plugins.SEconomy {
 			}
 
 			try {
-				return RunningJournal.GetBankAccountByName(tsPlayer.UserAccountName);
+				return RunningJournal.GetBankAccountByName(tsPlayer.User.Name);
 			} catch (Exception ex) {
 				TShock.Log.ConsoleError("seconomy error: Error getting bank account for {0}: {1}", 
 					tsPlayer.Name, ex.Message);
@@ -235,7 +235,7 @@ namespace Wolfje.Plugins.SEconomy {
 
 		public IBankAccount GetBankAccount(string userAccountName)
 		{
-			return GetBankAccount(TShockAPI.TShock.Players.FirstOrDefault(i => i != null && i.UserAccountName == userAccountName));
+			return GetBankAccount(TShockAPI.TShock.Players.FirstOrDefault(i => i != null && i.User.Name == userAccountName));
 		}
 
 		public IBankAccount GetPlayerBankAccount(string playerName)

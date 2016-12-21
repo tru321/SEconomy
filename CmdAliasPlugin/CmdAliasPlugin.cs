@@ -17,7 +17,7 @@ namespace Wolfje.Plugins.SEconomy.CmdAliasModule {
 	/// <summary>
 	/// Provides command aliases that can cost money to execute in SEconomy.
 	/// </summary>
-	[ApiVersion(1, 22)]
+	[ApiVersion(2, 0)]
 	public class CmdAliasPlugin : TerrariaPlugin {
 		protected static CmdAlias aliasCmdInstance;
 

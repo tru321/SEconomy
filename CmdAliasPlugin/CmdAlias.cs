@@ -113,7 +113,7 @@ namespace Wolfje.Plugins.SEconomy.CmdAliasModule {
 				}
 
 				//cooldown key is a pair of the user's character name, and the command they have called.
-				KeyValuePair<string, AliasCommand> cooldownReference = new KeyValuePair<string, AliasCommand>(e.CommandArgs.Player.UserAccountName, alias);
+				KeyValuePair<string, AliasCommand> cooldownReference = new KeyValuePair<string, AliasCommand>(e.CommandArgs.Player.User.Name, alias);
 				if (CooldownList.ContainsKey(cooldownReference)) {
 					//UTC time so we don't get any daylight saving shit cuntery
 					canRunNext = CooldownList[cooldownReference];
@@ -265,7 +265,7 @@ namespace Wolfje.Plugins.SEconomy.CmdAliasModule {
 				//replace parameter markers with actual parameter values
 				ReplaceParameterMarkers(parameters, ref mangledString);
 
-				mangledString = mangledString.Replace("$calleraccount", player.UserAccountName);
+				mangledString = mangledString.Replace("$calleraccount", player.User.Name);
 				mangledString = mangledString.Replace("$callername", player.Name);
 
 				//$random(x,y) support.  Returns a random number between x and y
