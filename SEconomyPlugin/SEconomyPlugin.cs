@@ -129,9 +129,9 @@ You do NOT have to restart the server to issue this command.  Just continue as n
 			Console.Write(" SEconomy Update ");
 			Console.ForegroundColor = ConsoleColor.Yellow;
 			Console.Write(this.Version.Build);
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            var ApiVersionFor = typeof(SEconomyPlugin).GetCustomAttributes(false)[0] as ApiVersionAttribute;
-            Console.Write(" for API {0}.{1}", ApiVersionFor.ApiVersion.Major, ApiVersionFor.ApiVersion.Minor);
+			Console.ForegroundColor = ConsoleColor.DarkCyan;
+			var ApiVersionFor = typeof(SEconomyPlugin).GetCustomAttributes(false)[0] as ApiVersionAttribute;
+			Console.Write(" for API {0}.{1}", ApiVersionFor.ApiVersion.Major, ApiVersionFor.ApiVersion.Minor);
 
 #if __PREVIEW
 			Console.ForegroundColor = ConsoleColor.Gray;
@@ -142,7 +142,7 @@ You do NOT have to restart the server to issue this command.  Just continue as n
 			}
 #endif
 
-            Console.WriteLine();
+			Console.WriteLine();
 			Console.ForegroundColor = ConsoleColor.Cyan;
 			Console.Write(" Copyright (C) Wolfje, 2014-2016 - ");
 

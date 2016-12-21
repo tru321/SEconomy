@@ -89,7 +89,7 @@ namespace Wolfje.Plugins.SEconomy.Forms {
             gvTransactions.DataSource = qTransactions;
             tranList = SecInstance.RunningJournal.Transactions;
 
-            player = TShock.Players.FirstOrDefault(i => i != null && i.User.Name == selectedAccount.UserAccountName);
+            player = TShock.Players.FirstOrDefault(i => i != null && i.Name == selectedAccount.UserAccountName);
 
             lblStatus.Text = string.Format("Loaded {0} transactions for {1}.", qTransactions.Count(), selectedAccount.UserAccountName);
             if (player != null) {
@@ -136,7 +136,7 @@ namespace Wolfje.Plugins.SEconomy.Forms {
                     Balance = account.Balance,
                     Value = account.BankAccountK,
                     HasAccount = (account.IsPluginAccount == false || account.IsSystemAccount == false) && tshockAccounts.Any(x => x == account.UserAccountName),
-                    IsOnline = (account.IsPluginAccount == true || account.IsSystemAccount == true) || TShock.Players.Any(x => x != null && x.User.Name == account.UserAccountName),
+                    IsOnline = (account.IsPluginAccount == true || account.IsSystemAccount == true) || TShock.Players.Any(x => x != null && x.Name == account.UserAccountName),
                     IsSystem = account.IsSystemAccount || account.IsPluginAccount
                 };
 

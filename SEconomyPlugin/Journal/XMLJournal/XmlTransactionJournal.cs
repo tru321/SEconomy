@@ -825,7 +825,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.XMLJournal {
                     args.TransferSucceeded = false;
                     TSPlayer from;
 
-                    if ((from = TShockAPI.TShock.Players.FirstOrDefault(i => i.User.Name == FromAccount.UserAccountName)) == null) {
+                    if ((from = TShockAPI.TShock.Players.FirstOrDefault(i => i.Name == FromAccount.UserAccountName)) == null) {
                         return args;
                     }
 

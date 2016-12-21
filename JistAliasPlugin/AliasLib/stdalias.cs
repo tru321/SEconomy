@@ -110,7 +110,7 @@ namespace Wolfje.Plugins.SEconomy.JistAliasModule.AliasLib {
 			}
 
 			KeyValuePair<string, AliasCommand> cooldownReference = 
-				new KeyValuePair<string, AliasCommand>(tsPlayer.User.Name, alias);
+				new KeyValuePair<string, AliasCommand>(tsPlayer.Name, alias);
 
 			if (aliasEngine.CooldownList.ContainsKey(cooldownReference)) {
 				aliasEngine.CooldownList.Remove(cooldownReference);
@@ -131,7 +131,7 @@ namespace Wolfje.Plugins.SEconomy.JistAliasModule.AliasLib {
 			}
 
 			KeyValuePair<string, AliasCommand> cooldownReference =
-				new KeyValuePair<string, AliasCommand>(tsPlayer.User.Name, alias);
+				new KeyValuePair<string, AliasCommand>(tsPlayer.Name, alias);
 
 			aliasEngine.PopulateCooldownList(cooldownReference, TimeSpan.FromSeconds(cooldownSeconds));
 
