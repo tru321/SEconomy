@@ -187,7 +187,7 @@ namespace Wolfje.Plugins.SEconomy
                 return;
             }
 
-            if ((NPC.boss && WorldConfiguration.MoneyFromBossEnabled) || (!NPC.boss && WorldConfiguration.MoneyFromNPCEnabled))
+            if (((NPC.boss && WorldConfiguration.MoneyFromBossEnabled) || (!NPC.boss && WorldConfiguration.MoneyFromNPCEnabled)) && !(NPC.SpawnedFromStatue && WorldConfiguration.IgnoreSpawnedFromStatue))
             {
                 foreach (PlayerDamage damage in playerDamageList)
                 {

@@ -42,6 +42,7 @@ namespace Wolfje.Plugins.SEconomy.Configuration.WorldConfiguration {
 
 		public decimal MoneyPerDamagePoint = 1.0M;
 
+		public bool IgnoreSpawnedFromStatue = true;
 		public List<NPCRewardOverride> Overrides = new List<NPCRewardOverride>();
 
 		public WorldConfig()
@@ -82,7 +83,7 @@ namespace Wolfje.Plugins.SEconomy.Configuration.WorldConfiguration {
 			foreach (int bannedMobID in bannedMobs) {
 				newConfig.Overrides.Add(new NPCRewardOverride() {
 					NPCID = bannedMobID,
-					OverridenMoneyPerDamagePoint = 0.0M
+					OverridenMoneyPerDamagePoint = 1.0M // for implementing IgnoreSpawnedFromStatue
 				});
 			}
 
