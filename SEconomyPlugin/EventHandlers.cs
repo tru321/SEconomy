@@ -71,16 +71,16 @@ namespace Wolfje.Plugins.SEconomy {
 			receiver = TShockAPI.TShock.Players.FirstOrDefault(i => i != null && i.Name == e.ReceiverAccount.UserAccountName);
 
 
-			
 
 
-		
+
+
 
 			if ((e.TransferOptions & Journal.BankAccountTransferOptions.AnnounceToReceiver) == Journal.BankAccountTransferOptions.AnnounceToReceiver && e.ReceiverAccount != null && receiver != null) {
 				bool gained = (e.Amount > 0 && (e.TransferOptions & BankAccountTransferOptions.IsPayment) == BankAccountTransferOptions.None);
 
 				string message = string.Format("{5}SEconomy\r\n{0}{1}\r\n{2}\r\nBal: {3}{4}",
-				(gained ? "+" : "-"), e.Amount.ToString(),
+				(gained ? "+" : ""), e.Amount.ToString(),
 				"for " + e.TransactionMessage,
 				e.ReceiverAccount.Balance.ToString(),
 				RepeatLineBreaks(59),
@@ -90,7 +90,8 @@ namespace Wolfje.Plugins.SEconomy {
 			}
 
 			if ((e.TransferOptions & Journal.BankAccountTransferOptions.AnnounceToSender) == Journal.BankAccountTransferOptions.AnnounceToSender && sender != null) {
-				bool gained = (e.Amount > 0 && (e.TransferOptions & BankAccountTransferOptions.IsPayment) == BankAccountTransferOptions.None);
+				//bool gained = (e.Amount > 0 && (e.TransferOptions & BankAccountTransferOptions.IsPayment) == BankAccountTransferOptions.None);
+				bool gained = false; // because sender always loses money?
 
 				string message = string.Format("{5}SEconomy\r\n{0}{1}\r\n{2}\r\nBal: {3}{4}",
 				(gained ? "+" : "-"), e.Amount.ToString(),

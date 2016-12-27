@@ -394,7 +394,7 @@ namespace Wolfje.Plugins.SEconomy
         {
             try
             {
-                if (e.MsgId == PacketTypes.PlayerDamage)
+                if (e.MsgId == PacketTypes.PlayerHurtV2)
                 {
                     //occurs when a player hits another player.  ignoreClient is the player that hit, e.number is the 
                     //player that got hit, and e.number4 is a flag indicating PvP damage
@@ -404,7 +404,7 @@ namespace Wolfje.Plugins.SEconomy
                         PlayerHitPlayer(e.ignoreClient, e.number);
                     }
                 }
-                else if (e.MsgId == PacketTypes.PlayerKillMe)
+                else if (e.MsgId == PacketTypes.PlayerDeathV2)
                 {
                     //Occrs when the player dies.
                     ProcessDeath(e.number, Convert.ToBoolean(e.number4));

@@ -196,7 +196,7 @@ namespace Wolfje.Plugins.SEconomy {
 									Journal.BankAccountTransferOptions.AnnounceToReceiver 
 										| Journal.BankAccountTransferOptions.AnnounceToSender 
 										| Journal.BankAccountTransferOptions.IsPlayerToPlayerTransfer, 
-									"",
+									string.Format("{0} >> {1}", args.Player.Name, args.Parameters[1]),
 									string.Format("SE: tfr: {0} to {1} for {2}", args.Player.Name, args.Parameters[1], amount.ToString()));
 							} else {
 								args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(55, "bank give: \"{0}\" isn't a valid amount of money."), args.Parameters[2]);
@@ -230,7 +230,7 @@ namespace Wolfje.Plugins.SEconomy {
 								}
 
 								//Instruct the world bank to give the player money.
-								Parent.WorldAccount.TransferTo(selectedAccount, amount, Journal.BankAccountTransferOptions.AnnounceToReceiver, "", string.Format("SE: pay: {0} to {1} ", amount.ToString(), args.Parameters[1]));
+								Parent.WorldAccount.TransferTo(selectedAccount, amount, Journal.BankAccountTransferOptions.AnnounceToReceiver, args.Parameters[0] + " command", string.Format("SE: pay: {0} to {1} ", amount.ToString(), args.Parameters[1]));
 							} else {
 								args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(55, "bank give: \"{0}\" isn't a valid amount of money."), args.Parameters[2]);
 							}
