@@ -80,14 +80,16 @@ namespace Wolfje.Plugins.SEconomy {
 			if ((e.TransferOptions & Journal.BankAccountTransferOptions.AnnounceToReceiver) == Journal.BankAccountTransferOptions.AnnounceToReceiver && e.ReceiverAccount != null && receiver != null) {
 				bool gained = (e.Amount > 0 && (e.TransferOptions & BankAccountTransferOptions.IsPayment) == BankAccountTransferOptions.None);
 
-				string message = string.Format("{5}SEconomy\r\n{0}{1}\r\n{2}\r\nBal: {3}{4}",
-				(gained ? "+" : ""), e.Amount.ToString(),
-				"for " + e.TransactionMessage,
-				e.ReceiverAccount.Balance.ToString(),
-				RepeatLineBreaks(59),
-				RepeatLineBreaks(11));
+				if (wConfig.ShowKillGainsDetailed) {
+					string message = string.Format("{5}SEconomy\r\n{0}{1}\r\n{2}\r\nBal: {3}{4}",
+					(gained ? "+" : ""), e.Amount.ToString(),
+					"for " + e.TransactionMessage,
+					e.ReceiverAccount.Balance.ToString(),
+					RepeatLineBreaks(59),
+					RepeatLineBreaks(11));
 
-				receiver.SendData(PacketTypes.Status, message, 0);
+					receiver.SendData(PacketTypes.Status, message, 0);
+				}
 
 				if (wConfig.ShowKillGainsOverhead) {
 					receiver.SendData(PacketTypes.CreateCombatText, (gained ? "+" : "") + e.Amount.ToString(), cRGB, receiver.X, receiver.Y);
@@ -98,14 +100,16 @@ namespace Wolfje.Plugins.SEconomy {
 				//bool gained = (e.Amount > 0 && (e.TransferOptions & BankAccountTransferOptions.IsPayment) == BankAccountTransferOptions.None);
 				bool gained = false; // because sender always loses money?
 
-				string message = string.Format("{5}SEconomy\r\n{0}{1}\r\n{2}\r\nBal: {3}{4}",
-				(gained ? "+" : "-"), e.Amount.ToString(),
-				"for " + e.TransactionMessage,
-				e.SenderAccount.Balance.ToString(),
-				RepeatLineBreaks(59),
-				RepeatLineBreaks(11));
+				if (wConfig.ShowKillGainsDetailed) {
+					string message = string.Format("{5}SEconomy\r\n{0}{1}\r\n{2}\r\nBal: {3}{4}",
+					(gained ? "+" : "-"), e.Amount.ToString(),
+					"for " + e.TransactionMessage,
+					e.SenderAccount.Balance.ToString(),
+					RepeatLineBreaks(59),
+					RepeatLineBreaks(11));
 
-				sender.SendData(PacketTypes.Status, message, 0); ;
+					sender.SendData(PacketTypes.Status, message, 0); ;
+				}
 
 				if (wConfig.ShowKillGainsOverhead) {
 					sender.SendData(PacketTypes.CreateCombatText, (gained ? "+" : "-") + e.Amount.ToString(), cRGB, sender.X, sender.Y);
