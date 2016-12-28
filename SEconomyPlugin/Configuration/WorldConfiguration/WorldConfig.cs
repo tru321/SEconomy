@@ -32,6 +32,8 @@ namespace Wolfje.Plugins.SEconomy.Configuration.WorldConfiguration {
 
 		public bool AnnounceNPCKillGains = true;
 		public bool AnnounceBossKillGains = true;
+		public bool ShowKillGainsOverhead = true;
+		public int[] OverheadColor = new int[] { 255, 255, 0 };
 
 		public bool StaticDeathPenalty = false;
 		public long StaticPenaltyAmount = 0;

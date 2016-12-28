@@ -70,11 +70,12 @@ namespace Wolfje.Plugins.SEconomy {
 			sender = TShockAPI.TShock.Players.FirstOrDefault(i => i != null && i.Name == e.SenderAccount.UserAccountName);
 			receiver = TShockAPI.TShock.Players.FirstOrDefault(i => i != null && i.Name == e.ReceiverAccount.UserAccountName);
 
-
-
-
-
-
+			Wolfje.Plugins.SEconomy.Configuration.WorldConfiguration.WorldConfig wConfig = Parent.WorldEc.WorldConfiguration;
+			int cRGB = (int)new Color(
+					wConfig.OverheadColor[0], 
+					wConfig.OverheadColor[1], 
+					wConfig.OverheadColor[2]
+				).PackedValue;
 
 			if ((e.TransferOptions & Journal.BankAccountTransferOptions.AnnounceToReceiver) == Journal.BankAccountTransferOptions.AnnounceToReceiver && e.ReceiverAccount != null && receiver != null) {
 				bool gained = (e.Amount > 0 && (e.TransferOptions & BankAccountTransferOptions.IsPayment) == BankAccountTransferOptions.None);
@@ -87,6 +88,10 @@ namespace Wolfje.Plugins.SEconomy {
 				RepeatLineBreaks(11));
 
 				receiver.SendData(PacketTypes.Status, message, 0);
+
+				if (wConfig.ShowKillGainsOverhead) {
+					receiver.SendData(PacketTypes.CreateCombatText, (gained ? "+" : "") + e.Amount.ToString(), cRGB, receiver.X, receiver.Y);
+				}
 			}
 
 			if ((e.TransferOptions & Journal.BankAccountTransferOptions.AnnounceToSender) == Journal.BankAccountTransferOptions.AnnounceToSender && sender != null) {
@@ -101,6 +106,10 @@ namespace Wolfje.Plugins.SEconomy {
 				RepeatLineBreaks(11));
 
 				sender.SendData(PacketTypes.Status, message, 0); ;
+
+				if (wConfig.ShowKillGainsOverhead) {
+					sender.SendData(PacketTypes.CreateCombatText, (gained ? "+" : "-") + e.Amount.ToString(), cRGB, sender.X, sender.Y);
+				}
 			}
 
 
