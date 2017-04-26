@@ -30,7 +30,7 @@ using Wolfje.Plugins.Jist.Framework;
 using Wolfje.Plugins.SEconomy.Journal;
 
 namespace Wolfje.Plugins.SEconomy.SEconomyScriptPlugin {
-	[ApiVersion(2, 0)]
+	[ApiVersion(2, 1)]
 	public class SEconomyScriptPlugin : TerrariaPlugin {
 		public override string Author { get { return "Wolfje"; } }
 

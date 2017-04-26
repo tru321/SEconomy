@@ -41,7 +41,7 @@ namespace Wolfje.Plugins.SEconomy {
 	/// 
 	/// API Version 1.1
 	/// </summary>
-	[ApiVersion(2, 0)]
+	[ApiVersion(2, 1)]
 	public class SEconomyPlugin : TerrariaPlugin {
 		public static Lang.Localization Locale { get; private set; }
 

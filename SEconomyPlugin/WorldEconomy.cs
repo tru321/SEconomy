@@ -217,7 +217,7 @@ namespace Wolfje.Plugins.SEconomy
                         Aggregations = 1,
                         Amount = rewardMoney,
                         DestinationBankAccountK = account.BankAccountK,
-                        Message = NPC.name,
+                        Message = NPC.FullName,
                         SourceBankAccountK = Parent.WorldAccount.BankAccountK
                     };
 
