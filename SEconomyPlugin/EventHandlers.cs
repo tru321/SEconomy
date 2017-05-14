@@ -92,7 +92,7 @@ namespace Wolfje.Plugins.SEconomy {
 				}
 
 				if (wConfig.ShowKillGainsOverhead) {
-					receiver.SendData(PacketTypes.CreateCombatText, (gained ? "+" : "") + e.Amount.ToString(), cRGB, receiver.X, receiver.Y);
+					receiver.SendData((PacketTypes)119, (gained ? "+" : "") + e.Amount.ToString(), cRGB, receiver.X, receiver.Y);
 				}
 			}
 
@@ -112,7 +112,7 @@ namespace Wolfje.Plugins.SEconomy {
 				}
 
 				if (wConfig.ShowKillGainsOverhead) {
-					sender.SendData(PacketTypes.CreateCombatText, (gained ? "+" : "-") + e.Amount.ToString(), cRGB, sender.X, sender.Y);
+					sender.SendData((PacketTypes)119, (gained ? "+" : "-") + e.Amount.ToString(), cRGB, sender.X, sender.Y);
 				}
 			}
 
