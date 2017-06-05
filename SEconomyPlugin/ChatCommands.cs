@@ -80,52 +80,72 @@ namespace Wolfje.Plugins.SEconomy {
 				return;
 			}
 
-			if (args.Parameters[0].Equals("reset", StringComparison.CurrentCultureIgnoreCase)) {
-				if (args.Player.Group.HasPermission("seconomy.reset")) {
-					if (args.Parameters.Count >= 2 && !string.IsNullOrEmpty(args.Parameters[1])) {
+			if (args.Parameters[0].Equals("reset", StringComparison.CurrentCultureIgnoreCase))
+			{
+				if (args.Player.Group.HasPermission("seconomy.reset"))
+				{
+					if (args.Parameters.Count >= 2 && !string.IsNullOrEmpty(args.Parameters[1]))
+					{
 						IBankAccount targetAccount = Parent.GetPlayerBankAccount(args.Parameters[1]);
 
-						if (targetAccount != null) {
+						if (targetAccount != null)
+						{
 							args.Player.SendInfoMessage(string.Format(SEconomyPlugin.Locale.StringOrDefault(39, "seconomy reset: Resetting {0}'s account."), args.Parameters[1]));
 							targetAccount.Transactions.Clear();
 							await targetAccount.SyncBalanceAsync();
 							args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(40, "seconomy reset:  Reset complete."));
-						} else {
+						} else
+						{
 							args.Player.SendErrorMessage(string.Format(SEconomyPlugin.Locale.StringOrDefault(41, "seconomy reset: Cannot find player \"{0}\" or no bank account found."), args.Parameters[1]));
 						}
 					}
-				} else {
+				}
+				else
+				{
 					args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(42, "seconomy reset: You do not have permission to perform this command."));
 				}
 			}
 
 			//Bank balance
 			if (args.Parameters[0].Equals("bal", StringComparison.CurrentCultureIgnoreCase)
-			    || args.Parameters[0].Equals("balance", StringComparison.CurrentCultureIgnoreCase)) {
+			    || args.Parameters[0].Equals("balance", StringComparison.CurrentCultureIgnoreCase))
+			{
 
 
 				//The command supports viewing other people's balance if the caller has permission
-				if (args.Player.Group.HasPermission("bank.viewothers")) {
-					if (args.Parameters.Count >= 2) {
+				if (args.Player.Group.HasPermission("bank.viewothers"))
+				{
+					if (args.Parameters.Count >= 2)
+					{
 						selectedAccount = Parent.GetPlayerBankAccount(args.Parameters[1]);
 						namePrefix = args.Parameters[1] + "'s";
 					}
 				}
 
-				if (selectedAccount != null) {
-					if (!selectedAccount.IsAccountEnabled && !args.Player.Group.HasPermission("bank.viewothers")) {
+				if (selectedAccount != null)
+				{
+					if (!selectedAccount.IsAccountEnabled && !args.Player.Group.HasPermission("bank.viewothers"))
+					{
 						args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(43, "bank balance: your account is disabled"));
-					} else {
+					}
+					else
+					{
 						args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(44, "balance: {0} {1}"), selectedAccount.Balance.ToLongString(true),
 							selectedAccount.IsAccountEnabled ? "" : SEconomyPlugin.Locale.StringOrDefault(45, "(disabled)"));
 					}
-				} else {
+				}
+				else
+				{
 					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(46, "bank balance: Cannot find player or no bank account."));
 				}
-			} else if (args.Parameters[0].Equals("mgr")) {
-				if (args.Player.Group.HasPermission("bank.mgr")) {
+			}
+			else if (args.Parameters[0].Equals("mgr"))
+			{
+				if (args.Player.Group.HasPermission("bank.mgr"))
+				{
 
-					if (args.Player is TShockAPI.TSServerPlayer) {
+					if (args.Player is TShockAPI.TSServerPlayer)
+					{
 						Thread t = new Thread(() => {
 							Forms.CAccountManagementWnd wnd = new Forms.CAccountManagementWnd(Parent);
 							TShock.Log.ConsoleInfo(SEconomyPlugin.Locale.StringOrDefault(47, "seconomy mgr: opening bank manager window"));
@@ -136,7 +156,9 @@ namespace Wolfje.Plugins.SEconomy {
 
 							try {
 								wnd.ShowDialog();
-							} catch (Exception ex) {
+							}
+							catch (Exception ex)
+							{
 								TShock.Log.ConsoleError(SEconomyPlugin.Locale.StringOrDefault(48, "seconomy mgr: Window closed because it crashed: ") + ex.ToString());
 							}
 
@@ -146,48 +168,70 @@ namespace Wolfje.Plugins.SEconomy {
 
 						t.SetApartmentState(ApartmentState.STA);
 						t.Start();
-					} else {
+					}
+					else
+					{
 						args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(50, "Only the console can do that."));
 					}
 				}
 
-			} else if (args.Parameters[0].Equals("savejournal")) {
-				if (args.Player.Group.HasPermission("bank.savejournal")) {
+			}
+			else if (args.Parameters[0].Equals("savejournal"))
+			{
+				if (args.Player.Group.HasPermission("bank.savejournal"))
+				{
 					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(51, "seconomy xml: Backing up transaction journal."));
 
 					await Parent.RunningJournal.SaveJournalAsync();
 				}
 
-			} else if (args.Parameters[0].Equals("loadjournal")) {
-				if (args.Player.Group.HasPermission("bank.loadjournal")) {
+			}
+			else if (args.Parameters[0].Equals("loadjournal"))
+			{
+				if (args.Player.Group.HasPermission("bank.loadjournal"))
+				{
 					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(52, "seconomy xml: Loading transaction journal from file"));
 
 					await Parent.RunningJournal.LoadJournalAsync();
 				}
 
-			} else if (args.Parameters[0].Equals("squashjournal", StringComparison.CurrentCultureIgnoreCase)) {
-				if (args.Player.Group.HasPermission("bank.squashjournal")) {
+			}
+			else if (args.Parameters[0].Equals("squashjournal", StringComparison.CurrentCultureIgnoreCase))
+			{
+				if (args.Player.Group.HasPermission("bank.squashjournal"))
+				{
 					await Parent.RunningJournal.SquashJournalAsync();
 					await Parent.RunningJournal.SaveJournalAsync();
-				} else {
+				}
+				else
+				{
 					args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(53, "bank squashjournal: You do not have permission to perform this command."));
 				}
-			} else if (args.Parameters[0].Equals("pay", StringComparison.CurrentCultureIgnoreCase)
+			}
+			else if (args.Parameters[0].Equals("pay", StringComparison.CurrentCultureIgnoreCase)
 			           || args.Parameters[0].Equals("transfer", StringComparison.CurrentCultureIgnoreCase)
-			           || args.Parameters[0].Equals("tfr", StringComparison.CurrentCultureIgnoreCase)) {
+			           || args.Parameters[0].Equals("tfr", StringComparison.CurrentCultureIgnoreCase))
+			{
 				//Player-to-player transfer
 
-				if (args.Player.Group.HasPermission("bank.transfer")) {
+				if (args.Player.Group.HasPermission("bank.transfer"))
+				{
 					// /bank pay wolfje 1p
-					if (args.Parameters.Count >= 3) {
+					if (args.Parameters.Count >= 3)
+					{
 						selectedAccount = Parent.GetPlayerBankAccount(args.Parameters[1]);
 						Money amount = 0;
 
-						if (selectedAccount == null) {
+						if (selectedAccount == null)
+						{
 							args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(54, "Cannot find player by the name of {0}."), args.Parameters[1]);
-						} else {
-							if (Money.TryParse(args.Parameters[2], out amount)) {
-								if (callerAccount == null) {
+						}
+						else
+						{
+							if (Money.TryParse(args.Parameters[2], out amount))
+							{
+								if (callerAccount == null)
+								{
 									args.Player.SendErrorMessage("bank pay: Bank account error.");
 									return;
 								}
@@ -196,49 +240,70 @@ namespace Wolfje.Plugins.SEconomy {
 									Journal.BankAccountTransferOptions.AnnounceToReceiver 
 										| Journal.BankAccountTransferOptions.AnnounceToSender 
 										| Journal.BankAccountTransferOptions.IsPlayerToPlayerTransfer, 
-									string.Format("{0} >> {1}", args.Player.Name, args.Parameters[1]),
-									string.Format("SE: tfr: {0} to {1} for {2}", args.Player.Name, args.Parameters[1], amount.ToString()));
-							} else {
+									string.Format("{0} >> {1}", args.Player.User.Name, args.Parameters[1]),
+									string.Format("SE: tfr: {0} to {1} for {2}", args.Player.User.Name, args.Parameters[1], amount.ToString()));
+							}
+							else
+							{
 								args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(55, "bank give: \"{0}\" isn't a valid amount of money."), args.Parameters[2]);
 							}
 						}
-					} else {
+					}
+					else
+					{
 						args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(56, "Usage: /bank pay [Player] [Amount]"));
 					}
-				} else {
+				}
+				else
+				{
 					args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(57, "bank pay: You don't have permission to do that."));
 				}
 
-			} else if (args.Parameters[0].Equals("give", StringComparison.CurrentCultureIgnoreCase)
-			           || args.Parameters[0].Equals("take", StringComparison.CurrentCultureIgnoreCase)) {
+			}
+			else if (args.Parameters[0].Equals("give", StringComparison.CurrentCultureIgnoreCase)
+			           || args.Parameters[0].Equals("take", StringComparison.CurrentCultureIgnoreCase))
+			{
 				//World-to-player transfer
 
-				if (args.Player.Group.HasPermission("bank.worldtransfer")) {
+				if (args.Player.Group.HasPermission("bank.worldtransfer"))
+				{
 					// /bank give wolfje 1p
-					if (args.Parameters.Count >= 3) {
+					if (args.Parameters.Count >= 3)
+					{
 						selectedAccount = Parent.GetPlayerBankAccount(args.Parameters[1]);
 						Money amount = 0;
 
-						if (selectedAccount == null) {
+						if (selectedAccount == null)
+						{
 							args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(54, "Cannot find player by the name of {0}."), args.Parameters[1]);
-						} else {
-							if (Money.TryParse(args.Parameters[2], out amount)) {
+						}
+						else
+						{
+							if (Money.TryParse(args.Parameters[2], out amount))
+							{
 
 								//eliminate a double-negative.  saying "take Player -1p1c" will give them 1 plat 1 copper!
-								if (args.Parameters[0].Equals("take", StringComparison.CurrentCultureIgnoreCase) && amount > 0) {
+								if (args.Parameters[0].Equals("take", StringComparison.CurrentCultureIgnoreCase) && amount > 0)
+								{
 									amount = -amount;
 								}
 
 								//Instruct the world bank to give the player money.
 								Parent.WorldAccount.TransferTo(selectedAccount, amount, Journal.BankAccountTransferOptions.AnnounceToReceiver, args.Parameters[0] + " command", string.Format("SE: pay: {0} to {1} ", amount.ToString(), args.Parameters[1]));
-							} else {
+							}
+							else
+							{
 								args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(55, "bank give: \"{0}\" isn't a valid amount of money."), args.Parameters[2]);
 							}
 						}
-					} else {
+					}
+					else
+					{
 						args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(58, "Usage: /bank give|take [Player] [Amount]"));
 					}
-				} else {
+				}
+				else
+				{
 					args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(57, "bank give: You don't have permission to do that."));
 				}
 			}
@@ -253,9 +318,11 @@ namespace Wolfje.Plugins.SEconomy {
 
 		protected virtual void Dispose(bool disposing)
 		{
-			if (disposing == true) {
+			if (disposing == true)
+			{
 				TShockAPI.Command bankCommand = TShockAPI.Commands.ChatCommands.FirstOrDefault(i => i.Name == "bank" && i.CommandDelegate == Chat_BankCommand);
-				if (bankCommand != null) {
+				if (bankCommand != null)
+				{
 					TShockAPI.Commands.ChatCommands.Remove(bankCommand);
 				}
 			}

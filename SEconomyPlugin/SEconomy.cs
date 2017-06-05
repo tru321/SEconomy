@@ -115,12 +115,12 @@ namespace Wolfje.Plugins.SEconomy {
 		internal async Task<Journal.IBankAccount> CreatePlayerAccountAsync(TSPlayer player)
 		{
 			Money startingMoney;
-			Journal.IBankAccount newAccount = SEconomyPlugin.Instance.RunningJournal.AddBankAccount(player.Name, 
+			Journal.IBankAccount newAccount = SEconomyPlugin.Instance.RunningJournal.AddBankAccount(player.User.Name, 
 				                                  Terraria.Main.worldID, 
 				                                  Journal.BankAccountFlags.Enabled, 
 				                                  "");
 
-			TShock.Log.ConsoleInfo(string.Format("seconomy: bank account for {0} created.", player.Name));
+			TShock.Log.ConsoleInfo(string.Format("seconomy: bank account for {0} created.", player.User.Name));
 
 			if (Money.TryParse(SEconomyPlugin.Instance.Configuration.StartingMoney, out startingMoney)
 			    && startingMoney > 0) {
@@ -150,11 +150,13 @@ namespace Wolfje.Plugins.SEconomy {
 			TShock.Log.ConsoleInfo(string.Format(SEconomyPlugin.Locale.StringOrDefault(1, "SEconomy: world account: paid {0} to players."), WorldAccount.Balance.ToLongString()));
 
 			await Task.Delay(5000);
-			foreach (var player in TShockAPI.TShock.Players) {
+			foreach (var player in TShockAPI.TShock.Players)
+			{
 				if (player == null
 				    || string.IsNullOrWhiteSpace(player.Name) == true
 				    //|| string.IsNullOrWhiteSpace(player.User.Name) == true
-				    || (account = GetBankAccount(player)) == null) {
+				    || (account = GetBankAccount(player)) == null)
+				{
 					continue;
 				}
                 
@@ -220,10 +222,10 @@ namespace Wolfje.Plugins.SEconomy {
 			}
 
 			try {
-				return RunningJournal.GetBankAccountByName(tsPlayer.Name);
+				return RunningJournal.GetBankAccountByName(tsPlayer.User.Name);
 			} catch (Exception ex) {
 				TShock.Log.ConsoleError("seconomy error: Error getting bank account for {0}: {1}", 
-					tsPlayer.Name, ex.Message);
+					tsPlayer.User.Name, ex.Message);
 				return null;
 			}
 		}
