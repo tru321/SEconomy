@@ -45,6 +45,7 @@ namespace Wolfje.Plugins.SEconomy {
 			}
 
 			TShockAPI.Hooks.PlayerHooks.PlayerPostLogin += PlayerHooks_PlayerPostLogin;
+            TShockAPI.Hooks.AccountHooks.AccountDelete += OnAccountDelete;
 			Parent.RunningJournal.BankTransferCompleted += BankAccount_BankTransferCompleted;
 			TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
@@ -242,6 +243,48 @@ namespace Wolfje.Plugins.SEconomy {
 			e.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(26, "You have {0}."), 
 				account.Balance.ToLongString());
 		}
+
+        /// <summary>
+        /// Occurs when a TShock account is deleted.
+        /// This function deletes the corresponding bank account to prevent an orphan account from
+        /// forming.
+        /// </summary>
+        protected void OnAccountDelete(TShockAPI.Hooks.AccountDeleteEventArgs e)
+        {
+            TShockAPI.DB.User user = e.User;
+
+            IBankAccount account = SEconomyPlugin.Instance.RunningJournal.GetBankAccountByName(user.Name);
+            if (account == null)
+                return;
+            TShock.Log.ConsoleInfo("Account not null");
+            //Bank account doesn't exist
+            /*if ((account = Parent.GetBankAccount(e.User.Name)) == null)
+            {
+                TShock.Log.ConsoleInfo("Doesn't exist");
+                return;
+            }*/
+
+            List<TSPlayer> players = TShock.Utils.FindPlayer(user.Name);
+            TShock.Log.ConsoleInfo("Step 1");
+            if (players.Count > 0)
+            {
+                TShock.Log.ConsoleInfo("Seconomy info: Player is online");
+                //Player is online, can't delete bank account, reset instead
+                account = null;
+                if ((account = SEconomyPlugin.Instance.RunningJournal.GetBankAccountByName(user.Name)) == null)
+                    return;
+
+                account.ResetAccountTransactions(account.BankAccountK); //?
+                account.SyncBalance();
+            }
+            else
+            {
+                TShock.Log.ConsoleInfo("Player offline, deleting {1}", user.Name);
+                SEconomyPlugin.Instance.RunningJournal.DeleteBankAccountAsync(account.BankAccountK);
+                TShock.Log.ConsoleInfo("seconomy info: Deleted {1}'s bank account", user.Name);
+            }
+        }
+
 
 		/// <summary>
 		/// Occurs when the pay run timer is elapsed, and gives the IntervalPayAmount to each player
