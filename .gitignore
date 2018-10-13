@@ -172,3 +172,7 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+.vs/SEconomy/v15/Server/sqlite3/db.lock
+.vs/SEconomy/v15/Server/sqlite3/storage.ide
+.vs/SEconomy/v15/Server/sqlite3/storage.ide-shm
+.vs/SEconomy/v15/Server/sqlite3/storage.ide-wal
