@@ -17,13 +17,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace Wolfje.Plugins.SEconomy {
+namespace Wolfje.Plugins.SEconomy
+{
 	/// <summary>
 	/// A representation of Money in Seconomy.  Money objects are toll-free bridged with 64-bit integers (long).
 	/// </summary>

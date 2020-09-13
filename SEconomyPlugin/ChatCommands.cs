@@ -23,7 +23,8 @@ using System.Threading;
 using TShockAPI;
 using Wolfje.Plugins.SEconomy.Journal;
 
-namespace Wolfje.Plugins.SEconomy {
+namespace Wolfje.Plugins.SEconomy
+{
 	internal class ChatCommands : IDisposable {
 		SEconomy Parent { get; set; }
 

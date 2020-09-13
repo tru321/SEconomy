@@ -385,7 +385,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.XMLJournal {
                         }
                     }
 
-                    Console.WriteLine(SEconomyPlugin.Locale.StringOrDefault(69, "[SEconomy Journal] finished backing up."));
+                    Console.WriteLine(SEconomyPlugin.Locale.StringOrDefault(69, "[SEconomy Journal] Finished backing up."));
                 }
             } catch {
                 Console.WriteLine(SEconomyPlugin.Locale.StringOrDefault(70, "[SEconomy Journal] There was an error saving your journal.  Make sure you have backups."));
@@ -663,7 +663,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.XMLJournal {
             int bankAccountCount = BankAccounts.Count();
             bool responsibleForTurningBackupsBackOn = false;
 
-            Console.WriteLine(SEconomyPlugin.Locale.StringOrDefault(81, "[SEconomy XML] beginning Squash"));
+            Console.WriteLine(SEconomyPlugin.Locale.StringOrDefault(81, "[SEconomy XML] Beginning Squash"));
 
             if (SEconomyInstance.RunningJournal.BackupsEnabled == true) {
                 SEconomyInstance.RunningJournal.BackupsEnabled = false;

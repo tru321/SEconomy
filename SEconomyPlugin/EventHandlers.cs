@@ -289,7 +289,7 @@ namespace Wolfje.Plugins.SEconomy {
 				return;
 			}
 
-			TShock.Log.ConsoleError(SEconomyPlugin.Locale.StringOrDefault(27, "[SEconomy Async] error occurred on a task thread: ") + e.Exception.Flatten().ToString());
+			TShock.Log.ConsoleError(SEconomyPlugin.Locale.StringOrDefault(27, "[SEconomy Async] Error occurred on a task thread: ") + e.Exception.Flatten().ToString());
 			e.SetObserved();
 		}
 

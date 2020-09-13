@@ -71,7 +71,7 @@ namespace Wolfje.Plugins.SEconomy.Configuration.WorldConfiguration {
 				} else if (ex is System.Security.SecurityException) {
 					TShock.Log.ConsoleError("[SEconomy WorldConfig] Access denied reading file " + Path);
 				} else {
-					TShock.Log.ConsoleError("[SEconomy WorldConfig] error " + ex.ToString());
+					TShock.Log.ConsoleError("[SEconomy WorldConfig] Error " + ex.ToString());
 				}
 			}
 
@@ -102,7 +102,7 @@ namespace Wolfje.Plugins.SEconomy.Configuration.WorldConfiguration {
 			} catch (Exception ex) {
 
 				if (ex is System.IO.DirectoryNotFoundException) {
-					TShock.Log.ConsoleError("[SEconomy WorldConfig] save directory not found: " + Path);
+					TShock.Log.ConsoleError("[SEconomy WorldConfig] Save directory not found: " + Path);
 
 				} else if (ex is UnauthorizedAccessException || ex is System.Security.SecurityException) {
 					TShock.Log.ConsoleError("[SEconomy WorldConfig] Access is denied to Vault config: " + Path);

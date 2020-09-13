@@ -19,24 +19,22 @@
 extern alias OTAPI;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Text;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
-using TShockAPI.DB;
-using TShockAPI.Extensions;
-using Wolfje.Plugins.SEconomy.Extensions;
-using System.Data;
-using System.Diagnostics;
-using System.Collections.Concurrent;
-using System.Text.RegularExpressions;
-using System.Reflection;
-using System.IO;
-using TShockAPI;
 using OTAPI.Terraria;
+using TShockAPI;
+using TShockAPI.DB;
+using Wolfje.Plugins.SEconomy.Extensions;
 
-namespace Wolfje.Plugins.SEconomy.Journal.MySQLJournal {
+namespace Wolfje.Plugins.SEconomy.Journal.MySQLJournal
+{
 	public class MySQLTransactionJournal : ITransactionJournal {
 		protected string connectionString;
 		protected Configuration.SQLConnectionProperties sqlProperties;
@@ -118,7 +116,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.MySQLJournal {
 					return null;
 				}
 			} catch (Exception ex) {
-				TShock.Log.ConsoleError("[SEconomy MySQL] sql error adding bank account: " + ex.ToString());
+				TShock.Log.ConsoleError("[SEconomy MySQL] Sql error adding bank account: " + ex.ToString());
 				return null;
 			}
 
@@ -383,7 +381,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.MySQLJournal {
 				Console.WriteLine("\r\n");
 				ConsoleEx.WriteLineColour(ConsoleColor.Cyan, "[SEconomy Journal Clean] {0} accounts, {1} transactions", BankAccounts.Count(), tranCount);
 			} catch (Exception ex) {
-				TShock.Log.ConsoleError("[SEconomy MySQL] db error in LoadJournal: " + ex.Message);
+				TShock.Log.ConsoleError("[SEconomy MySQL] Db error in LoadJournal: " + ex.Message);
 				throw;
 			}
 		}
@@ -400,12 +398,12 @@ namespace Wolfje.Plugins.SEconomy.Journal.MySQLJournal {
 
 		public async Task SquashJournalAsync()
 		{
-			TShock.Log.ConsoleInfo("[SEconomy MySQL] squashing accounts.");
-			if (await Connection.QueryAsync("CALL _squash();") < 0) {
-				TShock.Log.ConsoleError("[SEconomy MySQL] squashing failed.");
+			TShock.Log.ConsoleInfo(	"[SEconomy MySQL] Squashing accounts.");
+			if (await Connection.QueryAsync("CALL seconomy_squash();") < 0) {
+				TShock.Log.ConsoleError("[SEconomy MySQL] Squashing failed.");
 			}
 
-			TShock.Log.ConsoleInfo("[SEconomy MySQL] re-syncing online accounts");
+			TShock.Log.ConsoleInfo("[SEconomy MySQL] Re-syncing online accounts");
 			foreach (TSPlayer player in TShockAPI.TShock.Players) {
 				IBankAccount account = null;
 				if (player == null
@@ -417,7 +415,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.MySQLJournal {
 				await account.SyncBalanceAsync();
 			}
 
-			TShock.Log.ConsoleInfo("[SEconomy MySQL] squash complete.");
+			TShock.Log.ConsoleInfo("[SEconomy MySQL] Squash complete.");
 		}
 
 		bool TransferMaySucceed(IBankAccount FromAccount, IBankAccount ToAccount, Money MoneyNeeded, Journal.BankAccountTransferOptions Options)
@@ -591,10 +589,10 @@ namespace Wolfje.Plugins.SEconomy.Journal.MySQLJournal {
 					try {
 						sqlTrans.Rollback();
 					} catch {
-						TShock.Log.ConsoleError("[SEconomy MySQL] error in rollback:" + ex.ToString());
+						TShock.Log.ConsoleError("[SEconomy MySQL] Error in rollback:" + ex.ToString());
 					}
 				}
-				TShock.Log.ConsoleError("[SEconomy MySQL] database error in transfer:" + ex.ToString());
+				TShock.Log.ConsoleError("[SEconomy MySQL] Database error in transfer:" + ex.ToString());
 				args.Exception = ex;
 				return args;
 			} finally {
@@ -613,7 +611,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.MySQLJournal {
 
 			if (SEconomyInstance.Configuration.EnableProfiler == true) {
 				sw.Stop();
-				TShock.Log.ConsoleInfo("[SEconomy MySQL] transfer took {0} ms", sw.ElapsedMilliseconds);
+				TShock.Log.ConsoleInfo("[SEconomy MySQL] Transfer took {0} ms", sw.ElapsedMilliseconds);
 			}
 
 			return args;

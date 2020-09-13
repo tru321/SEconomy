@@ -173,7 +173,7 @@ namespace xml2sql {
 					Connection.QueryIdentity(query, out id, account.UserAccountName, account.WorldID,
 						(int)account.Flags, 0, account.Description, account.BankAccountK);
 				} catch (Exception ex) {
-					TShock.Log.ConsoleError("[SEconomy MySQL] sql error adding bank account: " + ex.ToString());
+					TShock.Log.ConsoleError("[SEconomy MySQL] Sql error adding bank account: " + ex.ToString());
 					continue;
 				}
 
