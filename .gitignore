@@ -91,8 +91,8 @@ $RECYCLE.BIN/
 [Rr]eleases/
 x64/
 x86/
-bld/
-[Bb]in/
+
+
 [Oo]bj/
 [Ll]og/
 
@@ -406,5 +406,6 @@ ASALocalRun/
 
 # Other
 obj/
-Debug/
 config.json
+*.userprefs
+*.config
