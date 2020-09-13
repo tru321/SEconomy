@@ -16,12 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+extern alias OTAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Terraria;
+using OTAPI.Terraria;
 using TShockAPI;
 using Wolfje.Plugins.SEconomy.Journal;
 
@@ -116,7 +117,7 @@ namespace Wolfje.Plugins.SEconomy {
 		{
 			Money startingMoney;
 			Journal.IBankAccount newAccount = SEconomyPlugin.Instance.RunningJournal.AddBankAccount(player.Name, 
-				                                  Terraria.Main.worldID, 
+				                                  Main.worldID, 
 				                                  Journal.BankAccountFlags.Enabled, 
 				                                  "");
 
@@ -209,9 +210,9 @@ namespace Wolfje.Plugins.SEconomy {
 			return 0;
 		}
 
-		public IBankAccount GetBankAccount(TShockAPI.TSPlayer tsPlayer)
+		public IBankAccount GetBankAccount(TSPlayer tsPlayer)
 		{
-			if (tsPlayer == null || RunningJournal == null) {
+			if (tsPlayer == null || RunningJournal == null || !tsPlayer.IsLoggedIn) {
 				return null;
 			}
 
@@ -220,22 +221,22 @@ namespace Wolfje.Plugins.SEconomy {
 			}
 
 			try {
-				return RunningJournal.GetBankAccountByName(tsPlayer.Name);
+				return RunningJournal.GetBankAccountByName(tsPlayer.Account.Name);
 			} catch (Exception ex) {
 				TShock.Log.ConsoleError("seconomy error: Error getting bank account for {0}: {1}", 
-					tsPlayer.Name, ex.Message);
+					tsPlayer.Account.Name, ex.Message);
 				return null;
 			}
 		}
 
-		public IBankAccount GetBankAccount(Terraria.Player player)
+		public IBankAccount GetBankAccount(Player player)
 		{
 			return GetBankAccount(player.whoAmI);
 		}
 
 		public IBankAccount GetBankAccount(string userAccountName)  // this overload seems not used from anywhere
 		{
-			return GetBankAccount(TShockAPI.TShock.Players.FirstOrDefault(i => i != null && i.User.Name == userAccountName));
+			return GetBankAccount(TShockAPI.TShock.Players.FirstOrDefault(i => i != null && i.Account.Name == userAccountName));
 		}
 
 		public IBankAccount GetPlayerBankAccount(string playerName)

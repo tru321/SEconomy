@@ -265,7 +265,7 @@ namespace Wolfje.Plugins.SEconomy.CmdAliasModule {
 				//replace parameter markers with actual parameter values
 				ReplaceParameterMarkers(parameters, ref mangledString);
 
-				mangledString = mangledString.Replace("$calleraccount", player.User.Name);
+				mangledString = mangledString.Replace("$calleraccount", player.Account.Name);
 				mangledString = mangledString.Replace("$callername", player.Name);
 
 				//$random(x,y) support.  Returns a random number between x and y

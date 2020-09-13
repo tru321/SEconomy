@@ -16,21 +16,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+extern alias OTAPI;
 using System;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
-using System.Linq;
 using System.Text;
 using System.Reflection;
-
-using System.Xml.Linq;
-
-using Terraria;
+using OTAPI.Terraria;
 using TerrariaApi.Server;
 using TShockAPI;
-using TShockAPI.Extensions;
 using System.Threading.Tasks;
-using System.Threading;
 
 namespace Wolfje.Plugins.SEconomy {
 

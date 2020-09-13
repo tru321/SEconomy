@@ -16,15 +16,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+extern alias OTAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TerrariaApi.Server;
+using OTAPI.Terraria;
 using TShockAPI;
 using Wolfje.Plugins.SEconomy.Journal;
-using Microsoft.Xna.Framework;
+using OTAPI.Microsoft.Xna.Framework;
 
 namespace Wolfje.Plugins.SEconomy {
 	/// <summary>
@@ -191,11 +193,11 @@ namespace Wolfje.Plugins.SEconomy {
 		{
 			byte index = default(byte);
 			PlayerControlFlags playerState = default(PlayerControlFlags);
-			Terraria.Player player;
+			Player player;
 
 			if (args.MsgID != PacketTypes.PlayerUpdate
 			    || (index = args.Msg.readBuffer[args.Index]) < 0
-			    || (player = Terraria.Main.player.ElementAtOrDefault(args.Msg.whoAmI)) == null) {
+			    || (player = Main.player.ElementAtOrDefault(args.Msg.whoAmI)) == null) {
 				return;
 			}
 
@@ -209,7 +211,7 @@ namespace Wolfje.Plugins.SEconomy {
 		/// </summary>
 		protected void ServerHooks_Leave(LeaveEventArgs args)
 		{
-			Parent.RemovePlayerIdleCache(Terraria.Main.player.ElementAtOrDefault(args.Who));
+			Parent.RemovePlayerIdleCache(Main.player.ElementAtOrDefault(args.Who));
 		}
 
 		/// <summary>

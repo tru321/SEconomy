@@ -16,14 +16,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+ extern alias OTAPI;
 using System;
-
 using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Linq;
 using System.Threading.Tasks;
-
+using OTAPI.Terraria;
 using System.IO;
 using System.IO.Compression;
 using System.Xml;
@@ -97,24 +97,24 @@ namespace Wolfje.Plugins.SEconomy.Journal.XMLJournal {
             IBankAccount worldAccount = null;
 
             //World account matches the current world, ignore.
-            if (SEconomyInstance.WorldAccount != null && SEconomyInstance.WorldAccount.WorldID == Terraria.Main.worldID) {
+            if (SEconomyInstance.WorldAccount != null && SEconomyInstance.WorldAccount.WorldID == Main.worldID) {
                 return null;
             }
 
-            if (Terraria.Main.worldID > 0) {
+            if (Main.worldID > 0) {
                 worldAccount = (from i in bankAccounts
                                 where (i.Flags & Journal.BankAccountFlags.SystemAccount) == Journal.BankAccountFlags.SystemAccount
                                     && (i.Flags & Journal.BankAccountFlags.PluginAccount) == 0
-                                    && i.WorldID == Terraria.Main.worldID
+                                    && i.WorldID == Main.worldID
                                 select i).FirstOrDefault();
 
                 //world account does not exist for this world ID, create one
                 if (worldAccount == null) {
                     //This account is always enabled, locked to the world it's in and a system account (ie. can run into deficit) but not a plugin account
-                    IBankAccount newWorldAcc = AddBankAccount("SYSTEM", Terraria.Main.worldID, Journal.BankAccountFlags.Enabled 
+                    IBankAccount newWorldAcc = AddBankAccount("SYSTEM", Main.worldID, Journal.BankAccountFlags.Enabled 
                         | Journal.BankAccountFlags.LockedToWorld 
                         | Journal.BankAccountFlags.SystemAccount, 
-                        "World account for world " + Terraria.Main.worldName);
+                        "World account for world " + Main.worldName);
 
                     worldAccount = newWorldAcc;
                 }
@@ -124,7 +124,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.XMLJournal {
                     bool accountEnabled = (worldAccount.Flags & Journal.BankAccountFlags.Enabled) == Journal.BankAccountFlags.Enabled;
 
                     if (!accountEnabled) {
-                        TShock.Log.ConsoleError(string.Format(SEconomyPlugin.Locale.StringOrDefault(60, "The world account for world {0} is disabled.  Currency will not work for this game."), Terraria.Main.worldName));
+                        TShock.Log.ConsoleError(string.Format(SEconomyPlugin.Locale.StringOrDefault(60, "The world account for world {0} is disabled.  Currency will not work for this game."), Main.worldName));
                         return null;
                     }
                 } else {
@@ -410,7 +410,6 @@ namespace Wolfje.Plugins.SEconomy.Journal.XMLJournal {
             };
 
             ConsoleEx.WriteLineColour(ConsoleColor.Cyan, " Using XML journal - {0}", path);
-
             try {
                 byte[] fileData = new byte[0];
             initPoint:
@@ -858,7 +857,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.XMLJournal {
         public void CleanJournal(PurgeOptions options)
         {
             long oldPercent = 0;
-            IEnumerable<string> userList = TShock.Users.GetUsers().Select(i => i.Name);
+            IEnumerable<string> userList = TShock.UserAccounts.GetUserAccounts().Select(i => i.Name);
             List<long> deleteList = new List<long>();
             JournalLoadingPercentChangedEventArgs args = new JournalLoadingPercentChangedEventArgs() {
                 Label = "Purge",

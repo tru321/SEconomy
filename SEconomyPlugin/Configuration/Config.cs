@@ -18,10 +18,6 @@
  */
  
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Newtonsoft.Json;
 using TShockAPI;
 
@@ -81,7 +77,6 @@ namespace Wolfje.Plugins.SEconomy {
 			}
 			return config;
 		}
-
 
 		public void SaveConfiguration()
 		{
