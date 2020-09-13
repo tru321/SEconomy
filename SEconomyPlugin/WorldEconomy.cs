@@ -177,7 +177,7 @@ namespace Wolfje.Plugins.SEconomy
 
                     if (DamageDictionary.Remove(NPC) == false)
                     {
-                        TShock.Log.ConsoleError("seconomy: world economy: Remove of NPC after reward failed.  This is an internal error.");
+                        TShock.Log.ConsoleError("[SEconomy World] Removal of NPC after reward failed. This is an internal error.");
                     }
                 }
             }

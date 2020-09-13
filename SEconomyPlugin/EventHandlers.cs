@@ -83,18 +83,19 @@ namespace Wolfje.Plugins.SEconomy {
 				bool gained = (e.Amount > 0 && (e.TransferOptions & BankAccountTransferOptions.IsPayment) == BankAccountTransferOptions.None);
 
 				if (wConfig.ShowKillGainsDetailed) {
-					string message = string.Format("{5}SEconomy\r\n{0}{1}\r\n{2}\r\nBal: {3}{4}",
-					(gained ? "+" : ""), e.Amount.ToString(),
-					"for " + e.TransactionMessage,
+					string message = string.Format("{5}[c/ff9900:[SEconomy][c/ff9900:]]\r\n{0}{1}\r\n{2}\r\n[c/ffff00:Bal:] {3}{4}",
+					(gained ? "+" : ""),
+					e.Amount.ToString(),
+					$"[c/00ff26:for {e.TransactionMessage}]",
 					e.ReceiverAccount.Balance.ToString(),
 					RepeatLineBreaks(59),
 					RepeatLineBreaks(11));
 
-					receiver.SendData(PacketTypes.Status, message, 0);
+					receiver.SendData(PacketTypes.Status, message, 0); //9
 				}
 
 				if (wConfig.ShowKillGainsOverhead) {
-					receiver.SendData((PacketTypes)119, (gained ? "+" : "") + e.Amount.ToString(), cRGB, receiver.X, receiver.Y);
+					receiver.SendData(PacketTypes.CreateCombatTextExtended, (gained ? "+" : "") + e.Amount.ToTextString(), cRGB, receiver.X, receiver.Y); //119
 				}
 			}
 
@@ -103,25 +104,25 @@ namespace Wolfje.Plugins.SEconomy {
 				bool gained = false; // because sender always loses money?
 
 				if (wConfig.ShowKillGainsDetailed) {
-					string message = string.Format("{5}SEconomy\r\n{0}{1}\r\n{2}\r\nBal: {3}{4}",
+					string message = string.Format("{5}[c/ff9900:[SEconomy][c/ff9900:]]\r\n{0}{1}\r\n{2}\r\n[c/ffff00:Bal:] {3}{4}",
 					(gained ? "+" : "-"), e.Amount.ToString(),
-					"for " + e.TransactionMessage,
+					$"[c/00ff26:for {e.TransactionMessage}]",
 					e.SenderAccount.Balance.ToString(),
 					RepeatLineBreaks(59),
 					RepeatLineBreaks(11));
 
-					sender.SendData(PacketTypes.Status, message, 0); ;
+					sender.SendData(PacketTypes.Status, message, 0);
 				}
 
 				if (wConfig.ShowKillGainsOverhead) {
-					sender.SendData((PacketTypes)119, (gained ? "+" : "-") + e.Amount.ToString(), cRGB, sender.X, sender.Y);
+					sender.SendData(PacketTypes.CreateCombatTextExtended, (gained ? "+" : "-") + e.Amount.ToTextString(), cRGB, sender.X, sender.Y);
 				}
 			}
 
 
 			return;
 
-			if ((e.TransferOptions & Journal.BankAccountTransferOptions.IsPlayerToPlayerTransfer) == Journal.BankAccountTransferOptions.IsPlayerToPlayerTransfer) {
+			/*if ((e.TransferOptions & Journal.BankAccountTransferOptions.IsPlayerToPlayerTransfer) == Journal.BankAccountTransferOptions.IsPlayerToPlayerTransfer) {
 				if ((e.TransferOptions & Journal.BankAccountTransferOptions.AnnounceToReceiver) == Journal.BankAccountTransferOptions.AnnounceToReceiver && e.ReceiverAccount != null && receiver != null) {
 					//string message = string.Format(SEconomyPlugin.Locale.StringOrDefault(16, "You {3} {0} from {1}. Transaction # {2}"), e.Amount.ToLongString(), 
 					//	sender != null ? sender.Name : SEconomyPlugin.Locale.StringOrDefault(17, "The server"), e.TransactionID, 
@@ -173,7 +174,7 @@ namespace Wolfje.Plugins.SEconomy {
 	//				receiver.SendMessage(), Color.Orange);
 					}
 				}
-			}
+			}*/
 		}
 
 		protected string RepeatLineBreaks(int number)
@@ -234,15 +235,15 @@ namespace Wolfje.Plugins.SEconomy {
 
 			if ((account = Parent.GetBankAccount(e.Player)) == null) {
 				if ((account = await Parent.CreatePlayerAccountAsync(e.Player)) == null) {
-					TShock.Log.ConsoleError("seconomy error:  Creating account for {0} failed.", e.Player.Name);
+					TShock.Log.ConsoleError("[SEconomy Error] Creating account for {0} failed.", e.Player.Name);
 				}
 				return;
 			}
 
 			await account.SyncBalanceAsync();
 			
-			e.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(26, "You have {0}."), 
-				account.Balance.ToLongString());
+			e.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(26, "You have {0}"), 
+				account.Balance.ToString());
 		}
 
 		/// <summary>
@@ -288,7 +289,7 @@ namespace Wolfje.Plugins.SEconomy {
 				return;
 			}
 
-			TShock.Log.ConsoleError(SEconomyPlugin.Locale.StringOrDefault(27, "seconomy async: error occurred on a task thread: ") + e.Exception.Flatten().ToString());
+			TShock.Log.ConsoleError(SEconomyPlugin.Locale.StringOrDefault(27, "[SEconomy Async] error occurred on a task thread: ") + e.Exception.Flatten().ToString());
 			e.SetObserved();
 		}
 

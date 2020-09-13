@@ -105,7 +105,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.MySQLJournal {
 				journal.Connection.Query("DELETE FROM `bank_account_transaction` WHERE `bank_account_fk` = @0;", this.BankAccountK);
                 this.Balance = 0;
 			} catch {
-				TShock.Log.ConsoleError(" seconomy mysql: MySQL command error in ResetAccountTransactions");
+				TShock.Log.ConsoleError("[SEconomy MySQL] MySQL command error in ResetAccountTransactions");
 			}
 		}
 
@@ -124,7 +124,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.MySQLJournal {
 			try {
 				this.Balance = Convert.ToInt64(journal.Connection.QueryScalarExisting<decimal>("SELECT IFNULL(SUM(Amount), 0) FROM `bank_account_transaction` WHERE `bank_account_transaction`.`bank_account_fk` = @0;", this.BankAccountK));
 			} catch (Exception ex) {
-				TShock.Log.ConsoleError(" seconomy mysql: SQL error in SyncBalance: " + ex.Message);
+				TShock.Log.ConsoleError("[SEconomy MySQL] SQL error in SyncBalance: " + ex.Message);
 			}
 		}
 
@@ -138,7 +138,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.MySQLJournal {
 			try {
 				this.Balance = Convert.ToInt64(journal.Connection.QueryScalar<decimal>("SELECT IFNULL(SUM(Amount), 0) FROM `bank_account_transaction` WHERE `bank_account_transaction`.`bank_account_fk` = @0;", this.BankAccountK));
 			} catch (Exception ex) {
-				TShock.Log.ConsoleError(" seconomy mysql: SQL error in SyncBalance: " + ex.Message);
+				TShock.Log.ConsoleError("[SEconomy MySQL] SQL error in SyncBalance: " + ex.Message);
 			}
 		}
 

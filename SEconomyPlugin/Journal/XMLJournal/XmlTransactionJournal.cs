@@ -348,10 +348,10 @@ namespace Wolfje.Plugins.SEconomy.Journal.XMLJournal {
                             File.Move(path, path + ".bak");
                         }
                     } catch {
-                        TShock.Log.ConsoleError(SEconomyPlugin.Locale.StringOrDefault(65, "seconomy backup: Cannot copy {0} to {1}, shadow backups will not work!"), path, path + ".bak");
+                        TShock.Log.ConsoleError(SEconomyPlugin.Locale.StringOrDefault(65, "[SEconomy Backup] Cannot copy {0} to {1}, shadow backups will not work!"), path, path + ".bak");
                     }
 
-                    Console.WriteLine(SEconomyPlugin.Locale.StringOrDefault(66, "seconomy journal: writing to disk"));
+                    Console.WriteLine(SEconomyPlugin.Locale.StringOrDefault(66, "[SEconomy Journal] Writing to disk"));
                     try {
                         using (FileStream fs = new FileStream(path + ".tmp", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None)) {
                             fs.SetLength(0);
@@ -364,13 +364,13 @@ namespace Wolfje.Plugins.SEconomy.Journal.XMLJournal {
                             }
                         }
                     } catch {
-                        TShock.Log.ConsoleError(SEconomyPlugin.Locale.StringOrDefault(67, "seconomy journal: Saving your journal failed!"));
+                        TShock.Log.ConsoleError(SEconomyPlugin.Locale.StringOrDefault(67, "[SEconomy Journal] Saving your journal failed!"));
 
                         if (File.Exists(path + ".tmp") == true) {
                             try {
                                 File.Delete(path + ".tmp");
                             } catch {
-                                TShock.Log.ConsoleError(SEconomyPlugin.Locale.StringOrDefault(68, "seconomy journal: Cannot delete temporary file!"));
+                                TShock.Log.ConsoleError(SEconomyPlugin.Locale.StringOrDefault(68, "[SEconomy Journal] Cannot delete temporary file!"));
                                 throw;
                             }
                         }
@@ -380,15 +380,15 @@ namespace Wolfje.Plugins.SEconomy.Journal.XMLJournal {
                         try {
                             File.Move(path + ".tmp", path);
                         } catch {
-                            TShock.Log.ConsoleError(SEconomyPlugin.Locale.StringOrDefault(68, "seconomy journal: Cannot delete temporary file!"));
+                            TShock.Log.ConsoleError(SEconomyPlugin.Locale.StringOrDefault(68, "[SEconomy Journal] Cannot delete temporary file!"));
                             throw;
                         }
                     }
 
-                    Console.WriteLine(SEconomyPlugin.Locale.StringOrDefault(69, "seconomy journal: finished backing up."));
+                    Console.WriteLine(SEconomyPlugin.Locale.StringOrDefault(69, "[SEconomy Journal] finished backing up."));
                 }
             } catch {
-                Console.WriteLine(SEconomyPlugin.Locale.StringOrDefault(70, "seconomy journal: There was an error saving your journal.  Make sure you have backups."));
+                Console.WriteLine(SEconomyPlugin.Locale.StringOrDefault(70, "[SEconomy Journal] There was an error saving your journal.  Make sure you have backups."));
             } finally {
                 JournalSaving = false;
             }
@@ -535,7 +535,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.XMLJournal {
                         int removedAccounts = bankAccounts.RemoveAll(pred => duplicateAccounts.Contains(pred.BankAccountK));
 
                         if (removedAccounts > 0) {
-                            TShock.Log.Warn("seconomy journal: removed " + removedAccounts + " accounts with duplicate IDs.");
+                            TShock.Log.Warn("[Journal] Removed " + removedAccounts + " accounts with duplicate IDs.");
                         }
 
                         //transactions in the old schema.
@@ -663,7 +663,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.XMLJournal {
             int bankAccountCount = BankAccounts.Count();
             bool responsibleForTurningBackupsBackOn = false;
 
-            Console.WriteLine(SEconomyPlugin.Locale.StringOrDefault(81, "seconomy xml: beginning Squash"));
+            Console.WriteLine(SEconomyPlugin.Locale.StringOrDefault(81, "[SEconomy XML] beginning Squash"));
 
             if (SEconomyInstance.RunningJournal.BackupsEnabled == true) {
                 SEconomyInstance.RunningJournal.BackupsEnabled = false;
@@ -838,7 +838,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.XMLJournal {
                         if (Amount < 0) {
                             from.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(83, "Invalid amount."));
                         } else {
-                            from.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(84, "You need {0} more to make this payment."), ((Money)(FromAccount.Balance - Amount)).ToLongString());
+                            from.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(84, "You need {0} more to make this payment."), ((Money)(FromAccount.Balance - Amount)).ToString());
                         }
                     }
                 }

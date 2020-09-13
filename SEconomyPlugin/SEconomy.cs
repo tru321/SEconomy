@@ -20,13 +20,13 @@ extern alias OTAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using OTAPI.Terraria;
 using TShockAPI;
 using Wolfje.Plugins.SEconomy.Journal;
 
-namespace Wolfje.Plugins.SEconomy {
+namespace Wolfje.Plugins.SEconomy
+{
 	public class SEconomy : IDisposable {
 		public Journal.ITransactionJournal RunningJournal { get; set; }
 
@@ -52,6 +52,7 @@ namespace Wolfje.Plugins.SEconomy {
 			this.PluginInstance = PluginInstance;
 		}
 
+		public string cmdStarter = TShock.Config.CommandSpecifier;
 		
 		#region "Loading and setup"
 
@@ -116,12 +117,12 @@ namespace Wolfje.Plugins.SEconomy {
 		internal async Task<Journal.IBankAccount> CreatePlayerAccountAsync(TSPlayer player)
 		{
 			Money startingMoney;
-			Journal.IBankAccount newAccount = SEconomyPlugin.Instance.RunningJournal.AddBankAccount(player.Name, 
+			Journal.IBankAccount newAccount = SEconomyPlugin.Instance.RunningJournal.AddBankAccount(player.Account.Name, 
 				                                  Main.worldID, 
 				                                  Journal.BankAccountFlags.Enabled, 
 				                                  "");
 
-			TShock.Log.ConsoleInfo(string.Format("seconomy: bank account for {0} created.", player.Name));
+			TShock.Log.ConsoleInfo(string.Format("[SEconomy] Bank account for {0} logged in as {1} created.", player.Name, player.Account.Name));
 
 			if (Money.TryParse(SEconomyPlugin.Instance.Configuration.StartingMoney, out startingMoney)
 			    && startingMoney > 0) {
@@ -143,12 +144,12 @@ namespace Wolfje.Plugins.SEconomy {
 			IBankAccount account = null;
 
 			if ((WorldAccount = RunningJournal.GetWorldAccount()) == null) {
-				TShock.Log.ConsoleError("seconomy bind:  The journal system did not return a world account.  This is an internal error.");
+				TShock.Log.ConsoleError("[SEconomy Bind] The journal system did not return a world account. This is an internal error.");
 				return;
 			}
 
 			await WorldAccount.SyncBalanceAsync();
-			TShock.Log.ConsoleInfo(string.Format(SEconomyPlugin.Locale.StringOrDefault(1, "SEconomy: world account: paid {0} to players."), WorldAccount.Balance.ToLongString()));
+			TShock.Log.ConsoleInfo(string.Format(SEconomyPlugin.Locale.StringOrDefault(1, "[SEconomy World Account] Paid {0} to players."), WorldAccount.Balance.ToLongString()));
 
 			await Task.Delay(5000);
 			foreach (var player in TShockAPI.TShock.Players) {
@@ -223,7 +224,7 @@ namespace Wolfje.Plugins.SEconomy {
 			try {
 				return RunningJournal.GetBankAccountByName(tsPlayer.Account.Name);
 			} catch (Exception ex) {
-				TShock.Log.ConsoleError("seconomy error: Error getting bank account for {0}: {1}", 
+				TShock.Log.ConsoleError("[SEconomy Error] Error getting bank account for {0}: {1}", 
 					tsPlayer.Account.Name, ex.Message);
 				return null;
 			}
