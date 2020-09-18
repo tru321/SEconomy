@@ -264,12 +264,7 @@ namespace Wolfje.Plugins.SEconomy.CmdAliasModule {
 				//replace parameter markers with actual parameter values
 				ReplaceParameterMarkers(parameters, ref mangledString);
 
-				if (!player.IsLoggedIn)
-				{
-					player.SendErrorMessage("You need to be logged in to use this command.");
-					return;
-				}
-				mangledString = mangledString.Replace("$calleraccount", player.Account.Name);
+				mangledString = mangledString.Replace("$calleraccount", player.Name);
 				mangledString = mangledString.Replace("$callername", player.Name);
 
 				//$random(x,y) support.  Returns a random number between x and y
