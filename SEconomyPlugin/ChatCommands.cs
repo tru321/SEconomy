@@ -45,34 +45,34 @@ namespace Wolfje.Plugins.SEconomy
 				//args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(29, "Download here: http://plugins.tw.id.au")); //Site is dead, and this is not maintained by wolfje anymore
 				args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(230, "You can:"));
 
-				args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(31, $"* View your balance with {TShock.Config.CommandSpecifier}bank bal"));
+				args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(31, $"* View your balance with {TShock.Config.Settings.CommandSpecifier}bank bal"));
 
 				if (args.Player.Group.HasPermission("bank.transfer")) {
-					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(32, $"* Trade players with {TShock.Config.CommandSpecifier}bank pay <player> <amount>"));
+					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(32, $"* Trade players with {TShock.Config.Settings.CommandSpecifier}bank pay <player> <amount>"));
 				}
 
 				if (args.Player.Group.HasPermission("bank.viewothers")) {
-					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(33, $"* View other people's balance with {TShock.Config.CommandSpecifier}bank bal <player>"));
+					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(33, $"* View other people's balance with {TShock.Config.Settings.CommandSpecifier}bank bal <player>"));
 				}
 
 				if (args.Player.Group.HasPermission("bank.worldtransfer")) {
-					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(34, $"* Spawn/delete money with {TShock.Config.CommandSpecifier}bank give|take <player> <amount>"));
+					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(34, $"* Spawn/delete money with {TShock.Config.Settings.CommandSpecifier}bank give|take <player> <amount>"));
 				}
 
 				if (args.Player.Group.HasPermission("bank.mgr")) {
-					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(35, $"* Spawn the account manager GUI on the server with {TShock.Config.CommandSpecifier}bank mgr"));
+					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(35, $"* Spawn the account manager GUI on the server with {TShock.Config.Settings.CommandSpecifier}bank mgr"));
 				}
 
 				if (args.Player.Group.HasPermission("bank.savejournal")) {
-					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(36, $"* Save the journal with {TShock.Config.CommandSpecifier}bank savejournal"));
+					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(36, $"* Save the journal with {TShock.Config.Settings.CommandSpecifier}bank savejournal"));
 				}
 
 				if (args.Player.Group.HasPermission("bank.loadjournal")) {
-					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(37, $"* Load the journal with {TShock.Config.CommandSpecifier}bank loadjournal"));
+					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(37, $"* Load the journal with {TShock.Config.Settings.CommandSpecifier}bank loadjournal"));
 				}
 
 				if (args.Player.Group.HasPermission("bank.squashjournal")) {
-					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(38, $"* Compress the journal with {TShock.Config.CommandSpecifier}bank squashjournal"));
+					args.Player.SendInfoMessage(SEconomyPlugin.Locale.StringOrDefault(38, $"* Compress the journal with {TShock.Config.Settings.CommandSpecifier}bank squashjournal"));
 				}
 
 				return;
@@ -209,7 +209,7 @@ namespace Wolfje.Plugins.SEconomy
 							}
 						}
 					} else {
-						args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(56, $"Usage: {TShock.Config.CommandSpecifier}bank pay [Player] [Amount]"));
+						args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(56, $"Usage: {TShock.Config.Settings.CommandSpecifier}bank pay [Player] [Amount]"));
 					}
 				} else {
 					args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(57, "[Bank Pay] You don't have permission to do that."));
@@ -242,7 +242,7 @@ namespace Wolfje.Plugins.SEconomy
 							}
 						}
 					} else {
-						args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(58, $"Usage: {TShock.Config.CommandSpecifier}bank give|take <Player Name> <Amount>"));
+						args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(58, $"Usage: {TShock.Config.Settings.CommandSpecifier}bank give|take <Player Name> <Amount>"));
 					}
 				} else {
 					args.Player.SendErrorMessage(SEconomyPlugin.Locale.StringOrDefault(57, "[Bank Give] You don't have permission to do that."));

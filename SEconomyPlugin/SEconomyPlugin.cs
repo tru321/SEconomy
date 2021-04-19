@@ -198,9 +198,9 @@ You do NOT have to restart the server to issue this command.  Just continue as n
 			if (args.Parameters.Count == 0) {
 				args.Player.SendInfoMessage(string.Format(Locale.StringOrDefault(3, "{0} by Wolfje"), GetVersionString()));
 				//args.Player.SendInfoMessage(" * http://plugins.tw.id.au");
-				args.Player.SendInfoMessage(Locale.StringOrDefault(5, $" * {TShock.Config.CommandSpecifier}sec[onomy] reload|rl - Reloads SEconomy"));
-				args.Player.SendInfoMessage(Locale.StringOrDefault(6, $" * {TShock.Config.CommandSpecifier}sec[onomy] stop - Stops and unloads SEconomy"));
-				args.Player.SendInfoMessage(Locale.StringOrDefault(7, $" * {TShock.Config.CommandSpecifier}sec[onomy] start - Starts SEconomy"));
+				args.Player.SendInfoMessage(Locale.StringOrDefault(5, $" * {TShock.Config.Settings.CommandSpecifier}sec[onomy] reload|rl - Reloads SEconomy"));
+				args.Player.SendInfoMessage(Locale.StringOrDefault(6, $" * {TShock.Config.Settings.CommandSpecifier}sec[onomy] stop - Stops and unloads SEconomy"));
+				args.Player.SendInfoMessage(Locale.StringOrDefault(7, $" * {TShock.Config.Settings.CommandSpecifier}sec[onomy] start - Starts SEconomy"));
 				return;
 			}
 
@@ -238,7 +238,7 @@ You do NOT have to restart the server to issue this command.  Just continue as n
 			} else if (args.Parameters[0].Equals("stop", StringComparison.CurrentCultureIgnoreCase)
 			           && args.Player.Group.HasPermission("seconomy.command.stop") == true) {
 				if (Instance == null) {
-					args.Player.SendErrorMessage(Locale.StringOrDefault(9, $"[SEconomy Stop] SEconomy has already stopped. Use {TShock.Config.CommandSpecifier}sec start to start"));
+					args.Player.SendErrorMessage(Locale.StringOrDefault(9, $"[SEconomy Stop] SEconomy has already stopped. Use {TShock.Config.Settings.CommandSpecifier}sec start to start"));
 					return;
 				}
 
@@ -252,7 +252,7 @@ You do NOT have to restart the server to issue this command.  Just continue as n
 			} else if (args.Parameters[0].Equals("start", StringComparison.CurrentCultureIgnoreCase)
 			           && args.Player.Group.HasPermission("seconomy.command.start") == true) {
 				if (Instance != null) {
-					args.Player.SendErrorMessage(Locale.StringOrDefault(11, $"[SEconomy Stop] SEconomy has already started. Use {TShock.Config.CommandSpecifier}sec stop to stop."));
+					args.Player.SendErrorMessage(Locale.StringOrDefault(11, $"[SEconomy Stop] SEconomy has already started. Use {TShock.Config.Settings.CommandSpecifier}sec stop to stop."));
 					return;
 				}
 				try {
@@ -293,7 +293,7 @@ You do NOT have to restart the server to issue this command.  Just continue as n
 				if (int.TryParse(args.Parameters[1], out multi) == false
 				    || multi < 0
 				    || multi > 100) {
-					args.Player.SendErrorMessage($"[SEconomy Multiplier] Syntax: {TShock.Config.CommandSpecifier}sec multi[plier] 1-100");
+					args.Player.SendErrorMessage($"[SEconomy Multiplier] Syntax: {TShock.Config.Settings.CommandSpecifier}sec multi[plier] 1-100");
 					return;
 				}
 

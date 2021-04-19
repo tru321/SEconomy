@@ -52,7 +52,7 @@ namespace Wolfje.Plugins.SEconomy
 			this.PluginInstance = PluginInstance;
 		}
 
-		public string cmdStarter = TShock.Config.CommandSpecifier;
+		public string cmdStarter = TShock.Config.Settings.CommandSpecifier;
 		
 		#region "Loading and setup"
 
