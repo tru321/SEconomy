@@ -83,13 +83,14 @@ namespace Wolfje.Plugins.SEconomy {
 				bool gained = (e.Amount > 0 && (e.TransferOptions & BankAccountTransferOptions.IsPayment) == BankAccountTransferOptions.None);
 
 				if (wConfig.ShowKillGainsDetailed) {
-					string message = string.Format("{5}[c/ff9900:[SEconomy][c/ff9900:]]\r\n{0}{1}\r\n{2}\r\n[c/ffff00:Bal:] {3}{4}",
+					string message = string.Format("{5}[c/ff9900:[SEconomy][c/ff9900:]]{6}\r\n{0}{1}\r\n{2}\r\n[c/ffff00:Bal:] {3}{4}",
 					(gained ? "+" : ""),
 					e.Amount.ToString(),
-					$"[c/00ff26:for {e.TransactionMessage}]",
+					$"[c/00ff26:for {e.TransactionMessage}]" + RepeatEmptySpaces(100),
 					e.ReceiverAccount.Balance.ToString(),
 					RepeatLineBreaks(59),
-					RepeatLineBreaks(11));
+					RepeatLineBreaks(11),
+					RepeatEmptySpaces(100));
 
 					receiver.SendData(PacketTypes.Status, message, 0); //9
 				}
@@ -186,7 +187,18 @@ namespace Wolfje.Plugins.SEconomy {
 
 			return sb.ToString();
 		}
+		
+		protected string RepeatEmptySpaces(int number)
+		{
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < number; i++)
+			{
+				sb.Append(" ");
+			}
 
+			return sb.ToString();
+		}
+		
 		/// <summary>
 		/// Occurs when the engine receives a packet from the client
 		/// </summary>
