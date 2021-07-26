@@ -88,8 +88,8 @@ namespace Wolfje.Plugins.SEconomy {
 					e.Amount.ToString(),
 					$"[c/00ff26:for {e.TransactionMessage}]" + RepeatEmptySpaces(100),
 					e.ReceiverAccount.Balance.ToString(),
-					RepeatLineBreaks(59),
-					RepeatLineBreaks(11),
+					RepeatLineBreaks(69),
+					RepeatLineBreaks(1),
 					RepeatEmptySpaces(100));
 
 					receiver.SendData(PacketTypes.Status, message, 0); //9
@@ -105,12 +105,13 @@ namespace Wolfje.Plugins.SEconomy {
 				bool gained = false; // because sender always loses money?
 
 				if (wConfig.ShowKillGainsDetailed) {
-					string message = string.Format("{5}[c/ff9900:[SEconomy][c/ff9900:]]\r\n{0}{1}\r\n{2}\r\n[c/ffff00:Bal:] {3}{4}",
+					string message = string.Format("{5}[c/ff9900:[SEconomy][c/ff9900:]]{6}\r\n{0}{1}\r\n{2}\r\n[c/ffff00:Bal:] {3}{4}",
 					(gained ? "+" : "-"), e.Amount.ToString(),
-					$"[c/00ff26:for {e.TransactionMessage}]",
+					$"[c/00ff26:for {e.TransactionMessage}]" + RepeatEmptySpaces(100),
 					e.SenderAccount.Balance.ToString(),
-					RepeatLineBreaks(59),
-					RepeatLineBreaks(11));
+					RepeatLineBreaks(69),
+					RepeatLineBreaks(1),
+					RepeatEmptySpaces(100));
 
 					sender.SendData(PacketTypes.Status, message, 0);
 				}
