@@ -50,9 +50,10 @@ namespace Wolfje.Plugins.SEconomy.Journal.MySQLJournal
 
 			this.instance = instance;
 			this.sqlProperties = sqlProperties;
-			this.connectionString = string.Format("server={0};user id={1};password={2};connect timeout=60;", 
+			this.connectionString = string.Format("server={0};port{3};user id={1};password={2};connect timeout=60;", 
 				sqlProperties.DbHost,
-				sqlProperties.DbUsername, sqlProperties.DbPassword);
+				sqlProperties.DbUsername, sqlProperties.DbPassword,
+				sqlProperties.DbPort);
 			this.SEconomyInstance = instance;
 			this.mysqlConnection = new MySqlConnection(connectionString);
 		}
